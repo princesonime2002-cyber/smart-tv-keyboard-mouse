@@ -2,90 +2,144 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart TV Keyboard & Mouse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart TV Remote</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #101522;
-  color: white;
-  text-align: center;
-  padding: 15px;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#101522;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
 }
-h1 { color: #4fc3f7; }
-textarea {
-  width: 95%;
-  height: 120px;
-  font-size: 20px;
-  border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
+header{padding:20px 10px}
+h1{margin:0;font-size:25px}
+header p{color:#aebbd1;font-size:14px}
+.panel{
+  max-width:420px;
+  margin:auto;
+  padding:16px;
 }
-button {
-  padding: 14px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  background: #1688e8;
-  color: white;
+.status{
+  background:#202a3d;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:15px;
+  color:#b8e6ff;
 }
-#pad {
-  height: 180px;
-  background: #273449;
-  border-radius: 15px;
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: none;
+input,textarea{
+  width:100%;
+  border:1px solid #35445e;
+  border-radius:12px;
+  padding:14px;
+  background:#202a3d;
+  color:white;
+  font-size:16px;
+  margin-bottom:10px;
 }
+button{
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#2878ff;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:active{transform:scale(.97)}
+.row{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin:10px 0;
+}
+.row button{flex:1}
+.secondary{background:#35445e}
+.red{background:#d94848}
+.green{background:#168a68}
+.pad{
+  background:#202a3d;
+  border:2px solid #35445e;
+  border-radius:22px;
+  height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:16px 0;
+  color:#b8c8df;
+  touch-action:manipulation;
+}
+.dpad{
+  width:220px;
+  margin:15px auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.dpad button{padding:17px 8px}
+.small{font-size:12px;color:#aebbd1;line-height:1.5}
 </style>
 </head>
 <body>
-
+<header>
 <h1>📺 Smart TV Remote</h1>
-<p>मोबाइल कीबोर्ड और माउस</p>
+<p>Mobile Keyboard & Touchpad</p>
+</header>
 
-<textarea id="typing" placeholder="यहाँ हिंदी या अंग्रेज़ी में टाइप करें..."></textarea>
+<main class="panel">
+<div class="status" id="status">● वेबसाइट चालू है — TV कनेक्शन अभी नहीं बना</div>
 
-<div>
-  <button onclick="sendText()">📤 TV पर भेजें</button>
-  <button onclick="document.getElementById('typing').value=''">🗑️ साफ करें</button>
+<textarea id="text" rows="2" placeholder="यहाँ टाइप करें..."></textarea>
+<div class="row">
+<button onclick="sendText()">⌨️ टेक्स्ट भेजें</button>
+<button class="secondary" onclick="clearText()">🗑️ साफ करें</button>
 </div>
 
-<h3>🖱️ माउस टचपैड</h3>
-<div id="pad">यहाँ उँगली चलाएँ</div>
-
-<div>
-  <button onclick="sendKey('ENTER')">↵ Enter</button>
-  <button onclick="sendKey('BACK')">← Back</button>
-  <button onclick="sendKey('UP')">↑</button>
-  <button onclick="sendKey('DOWN')">↓</button>
-  <button onclick="sendKey('LEFT')">←</button>
-  <button onclick="sendKey('RIGHT')">→</button>
+<h3>🖱️ टचपैड</h3>
+<div class="pad" onclick="message('टचपैड चुना गया है। वास्तविक TV नियंत्रण के लिए कनेक्शन चाहिए।')">
+यहाँ उँगली से कंट्रोल करें
 </div>
 
-<p id="status">TV से कनेक्शन अभी नहीं हुआ है।</p>
+<div class="dpad">
+<div></div><button onclick="message('ऊपर बटन दबाया गया')">▲</button><div></div>
+<button onclick="message('बायाँ बटन दबाया गया')">◀</button>
+<button class="green" onclick="message('OK बटन दबाया गया')">OK</button>
+<button onclick="message('दायाँ बटन दबाया गया')">▶</button>
+<div></div><button onclick="message('नीचे बटन दबाया गया')">▼</button><div></div>
+</div>
+
+<div class="row">
+<button class="secondary" onclick="message('Back बटन दबाया गया')">↩ Back</button>
+<button class="secondary" onclick="message('Home बटन दबाया गया')">⌂ Home</button>
+</div>
+<div class="row">
+<button class="red" onclick="message('वास्तविक TV नियंत्रण अभी कनेक्ट नहीं है')">⏻ Power</button>
+<button class="secondary" onclick="message('Menu बटन दबाया गया')">☰ Menu</button>
+</div>
+
+<p class="small">
+ध्यान दें: अभी बटन केवल डेमो हैं। ये TV पर वास्तविक टेक्स्ट या कमांड नहीं भेजते।
+</p>
+</main>
 
 <script>
-function sendText() {
-  document.getElementById('status').textContent =
-    'टेक्स्ट तैयार है। TV पर भेजने के लिए पहले कनेक्शन जोड़ना होगा।';
+function message(msg){
+ document.getElementById('status').textContent='ℹ️ '+msg;
 }
-
-function sendKey(key) {
-  document.getElementById('status').textContent =
-    'आपने ' + key + ' बटन दबाया। TV कनेक्शन अभी जोड़ना बाकी है।';
+function sendText(){
+ const value=document.getElementById('text').value;
+ if(!value.trim()){
+   message('पहले टेक्स्ट लिखें।');
+   return;
+ }
+ message('टेक्स्ट तैयार है, लेकिन TV कनेक्शन अभी नहीं बना है।');
 }
-
-const pad = document.getElementById('pad');
-pad.addEventListener('pointermove', function(event) {
-  if (event.buttons || event.pointerType === 'touch') {
-    pad.textContent = 'माउस टचपैड सक्रिय';
-  }
-});
+function clearText(){
+ document.getElementById('text').value='';
+ message('टेक्स्ट साफ कर दिया गया।');
+}
 </script>
-
 </body>
 </html>
