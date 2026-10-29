@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart TV Keyboard & Mouse</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #101522;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+h1 { color: #4fc3f7; }
+textarea {
+  width: 95%;
+  height: 120px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+button {
+  padding: 14px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  background: #1688e8;
+  color: white;
+}
+#pad {
+  height: 180px;
+  background: #273449;
+  border-radius: 15px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+</style>
+</head>
+<body>
+
+<h1>📺 Smart TV Remote</h1>
+<p>मोबाइल कीबोर्ड और माउस</p>
+
+<textarea id="typing" placeholder="यहाँ हिंदी या अंग्रेज़ी में टाइप करें..."></textarea>
+
+<div>
+  <button onclick="sendText()">📤 TV पर भेजें</button>
+  <button onclick="document.getElementById('typing').value=''">🗑️ साफ करें</button>
+</div>
+
+<h3>🖱️ माउस टचपैड</h3>
+<div id="pad">यहाँ उँगली चलाएँ</div>
+
+<div>
+  <button onclick="sendKey('ENTER')">↵ Enter</button>
+  <button onclick="sendKey('BACK')">← Back</button>
+  <button onclick="sendKey('UP')">↑</button>
+  <button onclick="sendKey('DOWN')">↓</button>
+  <button onclick="sendKey('LEFT')">←</button>
+  <button onclick="sendKey('RIGHT')">→</button>
+</div>
+
+<p id="status">TV से कनेक्शन अभी नहीं हुआ है।</p>
+
+<script>
+function sendText() {
+  document.getElementById('status').textContent =
+    'टेक्स्ट तैयार है। TV पर भेजने के लिए पहले कनेक्शन जोड़ना होगा।';
+}
+
+function sendKey(key) {
+  document.getElementById('status').textContent =
+    'आपने ' + key + ' बटन दबाया। TV कनेक्शन अभी जोड़ना बाकी है।';
+}
+
+const pad = document.getElementById('pad');
+pad.addEventListener('pointermove', function(event) {
+  if (event.buttons || event.pointerType === 'touch') {
+    pad.textContent = 'माउस टचपैड सक्रिय';
+  }
+});
+</script>
+
+</body>
+</html>
